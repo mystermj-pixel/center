@@ -1,0 +1,82 @@
+{
+ "version": 1,
+ "updated": "2026-09-29T03:02:07.451Z",
+ "posts": [
+  {
+   "id": "seed1",
+   "cat": "교육현장",
+   "date": "2026-09-29",
+   "title": "청소년 경진대회 운영 현장",
+   "body": "협회는 전국 청소년 과학경시대회, SW 마이스터고 해커톤, 자율주행 경진대회 등 학생 참여형 대회를 기획하고 운영합니다.\n\n참가 학생들은 주어진 과제를 팀 단위로 해결하고, 결과물을 발표하며 서로의 아이디어를 나눕니다. 융합교육센터는 과제 설계부터 심사 기준, 현장 운영까지 대회 전 과정을 함께 준비합니다.",
+   "images": [
+    {
+     "src": "news/img/seed1-a.jpg",
+     "thumb": "news/img/seed1-a-t.jpg",
+     "w": 993,
+     "h": 672
+    }
+   ],
+   "created": 4
+  },
+  {
+   "id": "seed2",
+   "cat": "교육현장",
+   "date": "2026-09-29",
+   "title": "미래 모빌리티 · 드론 교육캠프",
+   "body": "AI·SW 기반의 모빌리티와 로봇을 주제로 한 교육캠프 현장입니다.\n\n학생들은 자율주행 트랙 위에서 차량을 직접 제어해 보고, 야외에서 드론 비행 실습을 진행했습니다. 지역 청소년이 미래 기술을 직접 경험할 수 있도록 대학·지역 기관과 함께 캠프를 운영하고 있습니다.",
+   "images": [
+    {
+     "src": "news/img/seed2-a.jpg",
+     "thumb": "news/img/seed2-a-t.jpg",
+     "w": 993,
+     "h": 672
+    },
+    {
+     "src": "news/img/seed2-b.jpg",
+     "thumb": "news/img/seed2-b-t.jpg",
+     "w": 993,
+     "h": 672
+    }
+   ],
+   "created": 3
+  },
+  {
+   "id": "seed3",
+   "cat": "센터소식",
+   "date": "2026-09-29",
+   "title": "ICT AWARD KOREA · Si-Tech Innovation Award 운영",
+   "body": "협회는 ICT 분야의 디지털 혁신 성과를 발굴·시상하는 ICT AWARD KOREA와, ICT·과학기술 분야의 혁신 성과와 기업·인재를 발굴하는 Si-Tech Innovation Award를 자체 목적사업으로 운영하고 있습니다.\n\nICT AWARD KOREA는 학생부·대학부·기업부로 나누어 운영되며, 미래 인재와 기업의 성과를 함께 조명합니다.",
+   "images": [
+    {
+     "src": "news/img/seed3-a.jpg",
+     "thumb": "news/img/seed3-a-t.jpg",
+     "w": 993,
+     "h": 672
+    }
+   ],
+   "created": 2
+  },
+  {
+   "id": "seed4",
+   "cat": "교육현장",
+   "date": "2026-09-29",
+   "title": "AI·디지털 역량 교육 수업 현장",
+   "body": "초·중·고 학생과 성인 학습자를 대상으로 AI·디지털 역량 교육을 진행하고 있습니다.\n\n학생들은 노트북으로 생성형 AI 도구를 직접 다뤄 보며 결과물을 만들고, 성인 학습자 과정에서는 실무에 바로 쓸 수 있는 디지털 활용법을 익혔습니다.",
+   "images": [
+    {
+     "src": "news/img/seed4-a.jpg",
+     "thumb": "news/img/seed4-a-t.jpg",
+     "w": 990,
+     "h": 672
+    },
+    {
+     "src": "news/img/seed4-b.jpg",
+     "thumb": "news/img/seed4-b-t.jpg",
+     "w": 990,
+     "h": 672
+    }
+   ],
+   "created": 1
+  }
+ ]
+}
