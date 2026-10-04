@@ -1281,6 +1281,8 @@
     const m=$('#nmore',nv); if(m) m.onclick=()=>{ shown+=PER; board(); };
     if(prjSec){ nv.appendChild(prjSec); const j=$('#jprj',nv); if(j) j.onclick=e=>{ e.preventDefault(); prjSec.scrollIntoView({behavior:'smooth'}); }; }
   }
+  function splitVid(b){ b=String(b||'').replace(/\r/g,''); const m=b.match(/^\s*(\S+)\s*(?:\n\s*\n|$)/); if(m&&vidEmbed(m[1])) return {vid:m[1],body:b.slice(m[0].length).trim()}; return {vid:'',body:b}; }
+  function joinVid(v,b){ v=String(v||'').trim(); b=String(b||'').replace(/\r/g,'').trim(); return v?(v+(b?'\n\n'+b:'')).trim():b; }
   function vidEmbed(u){ let m=u.match(/^https?:\/\/(?:www\.|m\.)?(?:youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|live\/|embed\/)|youtu\.be\/)([\w-]{11})/); if(m) return 'https://www.youtube-nocookie.com/embed/'+m[1]+'?rel=0'; m=u.match(/^https?:\/\/(?:www\.|player\.)?vimeo\.com\/(?:video\/)?(\d+)/); if(m) return 'https://player.vimeo.com/video/'+m[1]; return null; }
   function ytId(t){ const m=String(t||'').match(/(?:youtube\.com\/(?:watch\?(?:[^\s]*&)?v=|shorts\/|live\/|embed\/)|youtu\.be\/)([\w-]{11})/); return m?m[1]:null; }
   const linkify=s=>esc(s).replace(/https?:\/\/[^\s<]+/g,u=>`<a class="lnk" href="${u}" target="_blank" rel="noopener">${u}</a>`);
@@ -1333,7 +1335,8 @@
       <div class="fld"><label for="e-cat">분류<i>*</i></label><select id="e-cat">${CATS.map(c=>`<option ${((orig?orig.cat:'사업성과')===c)?'selected':''}>${c}</option>`).join('')}</select></div>
       <div class="fld"><label for="e-date">게시일<i>*</i></label><input id="e-date" type="date" value="${esc(orig?orig.date:today)}" required></div>
       <div class="fld full"><label for="e-title">제목<i>*</i></label><input id="e-title" type="text" maxlength="120" value="${esc(orig?orig.title:'')}" placeholder="예) 2026 겨울 AI 메이커 캠프 참가 학교 모집" required></div>
-      <div class="fld full"><label for="e-body">내용<i>*</i></label><textarea id="e-body" placeholder="행사 개요, 일시·장소, 참여 대상, 주요 내용을 적어 주세요.&#10;&#10;빈 줄을 넣으면 문단이 나뉩니다.&#10;&#10;유튜브·Vimeo 주소를 한 줄에 따로 붙여넣으면 영상이 들어갑니다." required>${esc(orig?orig.body:'')}</textarea></div>
+      <div class="fld full"><label for="e-body">내용<i>*</i></label><textarea id="e-body" placeholder="행사 개요, 일시·장소, 참여 대상, 주요 내용을 적어 주세요.&#10;&#10;빈 줄을 넣으면 문단이 나뉩니다.&#10;&#10;유튜브·Vimeo 주소를 한 줄에 따로 붙여넣으면 영상이 들어갑니다." required>${esc(splitVid(orig?orig.body:'').body)}</textarea></div>
+      <div class="fld full"><label for="e-vid">영상 주소 <span style="font-weight:400;color:var(--ink3)">(선택 · 유튜브·Vimeo)</span></label><input id="e-vid" type="url" inputmode="url" value="${esc(splitVid(orig?orig.body:'').vid)}" placeholder="예) https://youtu.be/xxxxxxxxxxx — 글 맨 위에 영상이 나옵니다"></div>
       <label class="drop" id="drop" for="e-files"><b>사진 추가</b> — 클릭하거나 사진을 끌어다 놓으세요 (여러 장 가능, 최대 20장)<input id="e-files" type="file" accept="image/*" multiple hidden></label>
       <div class="thumbs" id="thumbs"></div>
       <div class="ffoot"><span class="status" id="est"></span><div style="display:flex;gap:10px"><a class="btn" href="${orig?'#/news/'+esc(orig.id):'#/news'}">취소</a><button class="btn f" type="submit" id="esave">${orig?'수정 저장':'등록하기'} <span class="a">→</span></button></div></div>
@@ -1360,9 +1363,10 @@
     $('#ef',nv).onsubmit=async e=>{
       e.preventDefault(); const f=e.target; if(!f.reportValidity()) return;
       if(items.some(i=>i.busy)){ st.textContent='사진을 처리하는 중입니다. 잠시만 기다려 주세요.'; st.className='status'; return; }
-      const post={id:pid,cat:$('#e-cat',nv).value,date:$('#e-date',nv).value,title:$('#e-title',nv).value.trim(),body:$('#e-body',nv).value.replace(/\r/g,'').trim(),
+      const post={id:pid,cat:$('#e-cat',nv).value,date:$('#e-date',nv).value,title:$('#e-title',nv).value.trim(),body:joinVid($('#e-vid',nv).value,$('#e-body',nv).value),
         images:items.map(i=>({src:i.src,thumb:i.thumb,w:i.w,h:i.h})),created:orig?orig.created:Date.now(),updated:Date.now()};
       if(!post.title||!post.body){ st.textContent='제목과 내용을 입력해 주세요.'; st.className='status err'; return; }
+      { const v=$('#e-vid',nv).value.trim(); if(v&&!vidEmbed(v)){ st.textContent='영상 주소를 확인해 주세요. 유튜브 또는 Vimeo 주소만 넣을 수 있습니다.'; st.className='status err'; return; } }
       const files={}; items.filter(i=>!i.old).forEach(i=>{ files[i.src]=i.blob; files[i.thumb]=i.tblob; });
       const keep=new Set(items.map(i=>i.src)), removed=[]; (orig?orig.images:[]).forEach(im=>{ if(!keep.has(im.src)){ removed.push(im.src); if(im.thumb) removed.push(im.thumb); } });
       const next=orig?posts.map(p=>p.id===pid?post:p):[post,...posts];
